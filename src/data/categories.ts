@@ -74,6 +74,14 @@ export const CATEGORIES: Category[] = [
     blurb: 'Buses, trip planner, route maps, Medicaid rides, volunteer drivers.',
   },
   {
+    id: 'driving',
+    label: 'Driving & Vehicles',
+    short: 'Driving',
+    icon: 'car-outline',
+    color: '#37474F',
+    blurb: 'DMV, license reinstatement, permit test prep, emissions, car repair and insurance help.',
+  },
+  {
     id: 'phone',
     label: 'Phone & Internet',
     short: 'Phone',

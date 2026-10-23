@@ -7,6 +7,7 @@ export type CategoryId =
   | 'utilities'
   | 'health'
   | 'transportation'
+  | 'driving'
   | 'phone'
   | 'legal'
   | 'seniors_disability'

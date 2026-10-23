@@ -901,6 +901,23 @@ export function isChildcareResource(resource: Resource): boolean {
   return CHILDCARE_ALWAYS.has(resource.id);
 }
 
+/** Driving tile also shows DMV, REAL ID, placards, Transfort, Dial-A-Ride, SAINT, and COLT by id — do not recategorize those listings. */
+const DRIVING_ALSO = new Set<string>([
+  'colorado-dmv-fort-collins',
+  'colorado-dmv-loveland',
+  'colorado-real-id',
+  'colorado-disabled-parking',
+  'transfort',
+  'transfort-dial-a-ride',
+  'saint-senior-transport',
+  'colt-loveland',
+]);
+
+export function isDrivingResource(resource: Resource): boolean {
+  if (resource.category === 'driving') return true;
+  return DRIVING_ALSO.has(resource.id);
+}
+
 export function sortChildcareResources(list: Resource[]): Resource[] {
   return sortPinnedResources(list, FAMILY_PINNED_IDS);
 }
