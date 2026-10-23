@@ -7,7 +7,7 @@ import { dowKey, useI18n } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
 import { loadRegionDay } from '../lib/trashPrefs';
 import type { ServiceDow } from '../lib/trashCalendar';
-import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
+import { cardShadow, radius, spacing, useTheme } from '../theme';
 
 type Props = {
   trashRegionId: string | null;
@@ -72,8 +72,8 @@ export function HomeTools({ trashRegionId, onTrash, onOpenNow, onGiveNeed, onOff
         accessibilityRole="button"
         accessibilityLabel={t('tool.openA11y')}
       >
-        <View style={[styles.icon, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
-          <Ionicons name="time-outline" size={26} color={HEADER_PURPLE} />
+        <View style={[styles.icon, { backgroundColor: `${colors.accent}1a` }]}>
+          <Ionicons name="time-outline" size={26} color={colors.accent} />
         </View>
         <Text style={[styles.label, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
           {t('tool.open')}

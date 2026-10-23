@@ -17,7 +17,7 @@ export function SearchBar({ value, onChange, placeholder }: Props) {
   const { t } = useI18n();
   const hint = placeholder ?? t(largePrint ? 'search.placeholderShort' : 'search.placeholder');
   return (
-    <View style={[styles.wrap, { backgroundColor: colors.card, borderColor: colors.line }]}>
+    <View style={[styles.wrap, { backgroundColor: colors.card, borderColor: colors.inputBorder }]}>
       <Ionicons name="search" size={20} color={colors.muted} />
       <TextInput
         value={value}
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     minHeight: 50,
     marginHorizontal: spacing.lg,
-    borderWidth: 1,
+    borderWidth: 2,
   },
   input: { flex: 1, fontSize: 16, paddingVertical: 0, minWidth: 0 },
 });

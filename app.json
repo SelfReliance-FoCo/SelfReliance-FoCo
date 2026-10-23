@@ -3,7 +3,7 @@
     "name": "Self-Reliance FoCo",
     "slug": "self-reliance-foco",
     "version": "2.24.12",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -31,7 +31,8 @@
       "themeColor": "#522f81",
       "backgroundColor": "#522f81",
       "display": "standalone",
-      "lang": "en"
+      "lang": "en",
+      "orientation": "any"
     },
     "plugins": [
       [

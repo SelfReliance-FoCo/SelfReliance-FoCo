@@ -8,7 +8,8 @@ import { useI18n } from '../i18n';
 import { mapsTownUrl, open } from '../lib/actions';
 import { useBackLayer } from '../lib/backStack';
 import { MAX_FONT } from '../lib/fontScale';
-import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
+import { radius, spacing, useTheme } from '../theme';
+import { Heading } from '../components/a11y';
 
 const HELP = 'https://support.google.com/maps/answer/6292498';
 const TRANSFORT = 'https://ridetransfort.com/routes-and-schedules/';
@@ -35,7 +36,7 @@ export function OfflineMapsScreen({ area, onAreaChange, onBack }: Props) {
       <Header title={t('maps.title')} subtitle={t('maps.subtitle')} />
       <ScrollView contentContainerStyle={styles.body}>
         <Pressable onPress={handleClose} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
-          <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
+          <Ionicons name="arrow-back" size={20} color={colors.accent} />
           <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
         </Pressable>
         <AreaFilter value={area} onChange={onAreaChange} />
@@ -44,7 +45,9 @@ export function OfflineMapsScreen({ area, onAreaChange, onBack }: Props) {
           {t('maps.lede', { town })}
         </Text>
 
-        <Text style={[styles.section, { color: colors.ink }]}>{t('maps.downloadSection')}</Text>
+        <Heading level={2} style={[styles.section, { color: colors.ink }]}>
+          {t('maps.downloadSection')}
+        </Heading>
         <Step n={1} line={t('maps.step1')} />
         <Step n={2} line={t('maps.step2', { town })} />
         <Step n={3} line={t('maps.step3')} />
@@ -59,7 +62,9 @@ export function OfflineMapsScreen({ area, onAreaChange, onBack }: Props) {
         <Action icon="map-outline" label={t('maps.openTown', { town })} onPress={() => open(mapsTownUrl(town))} />
         <Action icon="download-outline" label={t('maps.googleSteps')} onPress={() => open(HELP)} />
 
-        <Text style={[styles.section, { color: colors.ink }]}>{t('maps.busSection')}</Text>
+        <Heading level={2} style={[styles.section, { color: colors.ink }]}>
+          {t('maps.busSection')}
+        </Heading>
         <Text style={[styles.note, { color: colors.body }]}>{t('maps.busNote')}</Text>
         <Action icon="bus-outline" label={t('maps.transfort')} onPress={() => open(TRANSFORT)} />
         {town === 'Loveland' ? (
@@ -74,8 +79,8 @@ function Step({ n, line }: { n: number; line: string }) {
   const { colors } = useTheme();
   return (
     <View style={[styles.step, { backgroundColor: colors.card }]}>
-      <View style={[styles.num, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
-        <Text style={[styles.numText, { color: HEADER_PURPLE }]}>{n}</Text>
+      <View style={[styles.num, { backgroundColor: `${colors.accent}1a` }]}>
+        <Text style={[styles.numText, { color: colors.accent }]}>{n}</Text>
       </View>
       <Text style={[styles.stepLine, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
         {line}
@@ -89,12 +94,12 @@ function Action({ icon, label, onPress }: { icon: string; label: string; onPress
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.action, { borderColor: HEADER_PURPLE, backgroundColor: colors.card }]}
+      style={[styles.action, { borderColor: colors.accent, backgroundColor: colors.card }]}
       accessibilityRole="button"
       accessibilityLabel={label}
     >
-      <Ionicons name={icon as never} size={20} color={HEADER_PURPLE} />
-      <Text style={[styles.actionText, { color: colors.purple }]}>{label}</Text>
+      <Ionicons name={icon as never} size={20} color={colors.accent} />
+      <Text style={[styles.actionText, { color: colors.accent }]}>{label}</Text>
     </Pressable>
   );
 }

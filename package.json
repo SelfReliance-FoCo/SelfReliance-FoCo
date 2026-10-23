@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/react": "~19.2.2",
     "typescript": "~6.0.3",
-    "electron": "^37.2.0",
+    "electron": "^45.0.0",
     "electron-builder": "^26.0.12"
   },
   "scripts": {
@@ -36,11 +36,18 @@
     "check:marriage": "node scripts/check-marriage.mjs",
     "check:religion": "node scripts/check-religion.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",
+    "check:contrast": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-contrast.mjs",
+    "check:external": "node scripts/check-external-url.mjs",
+    "check:all": "npm run validate && npm run typecheck && npm run check:trash && npm run check:open && npm run check:give && npm run check:ehs && npm run check:language && npm run check:marriage && npm run check:religion && npm run check:i18n && npm run check:contrast && npm run check:external",
+    "install:tools": "node scripts/install-allowed.mjs",
     "build:android": "node scripts/validate-resources.mjs && cd android && ./gradlew assembleRelease",
-    "desktop:export": "expo export --platform web --output-dir dist-web",
+    "desktop:export": "node scripts/export-web.mjs",
     "desktop:pack": "electron-builder --config electron-builder.yml",
     "desktop:pack:win": "electron-builder --win nsis --config electron-builder.yml",
     "desktop:pack:mac": "electron-builder --mac dmg --config electron-builder.yml"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  }
 }

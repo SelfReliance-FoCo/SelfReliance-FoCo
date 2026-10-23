@@ -11,8 +11,8 @@ export function useLargePrint(): boolean {
   return useFontScale() >= 1.25;
 }
 
-/** Caps for chrome (tabs, chips, search, header). Listing body text is left uncapped. */
+/** Caps for chrome (tabs, chips, search, header). 2.0 matches WCAG resize text. Listing body stays uncapped. */
 export const MAX_FONT = {
-  chrome: 1.4,
-  title: 1.5,
+  chrome: 2,
+  title: 2,
 } as const;

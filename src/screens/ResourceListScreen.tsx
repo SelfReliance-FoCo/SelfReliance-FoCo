@@ -190,8 +190,8 @@ export function ResourceListScreen({
                 ))}
               </ChipRow>
             ) : showCertGroups ? (
-              <>
-                <ChipRow>
+              <View accessibilityRole="radiogroup">
+                <ChipRow grouped={false}>
                   <Chip label={t('chip.all')} active={jobFilter === 'all'} onPress={() => setJobFilter('all')} />
                   <Chip
                     label={t('chip.jobs.help')}
@@ -219,7 +219,7 @@ export function ResourceListScreen({
                     onPress={() => setJobFilter('classes')}
                   />
                 </ChipRow>
-                <ChipRow>
+                <ChipRow grouped={false}>
                   {CERT_GROUPS.map((g) => (
                     <Chip
                       key={g.id}
@@ -231,7 +231,7 @@ export function ResourceListScreen({
                     />
                   ))}
                 </ChipRow>
-              </>
+              </View>
             ) : categories.length > 1 && !alsoInclude ? (
               <ChipRow>
                 <Chip label={t('chip.all')} active={activeCat === 'all'} onPress={() => setActiveCat('all')} />
@@ -247,14 +247,14 @@ export function ResourceListScreen({
               </ChipRow>
             ) : null}
             <AreaFilter value={area} onChange={onAreaChange} />
-            <Text style={[styles.count, { color: colors.muted }]}>
+            <Text style={[styles.count, { color: colors.muted }]} accessibilityLiveRegion="polite">
               {t(results.length === 1 ? 'home.countOne' : 'home.countMany', { n: results.length })}
               {area === 'All' ? '' : t('home.inArea', { area: areaLabel(area, t) })}
             </Text>
           </View>
         }
         ListEmptyComponent={
-          <View style={styles.empty}>
+          <View style={styles.empty} accessibilityLiveRegion="polite">
             <Ionicons name="search-outline" size={40} color={colors.muted} />
             <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('list.nothingMatched')}</Text>
             <Text style={[styles.emptyText, { color: colors.muted }]}>{emptyHint}</Text>

@@ -6,6 +6,7 @@ export const ar: Record<keyof typeof en, string> = {
   'app.subtitleShort': 'مساعدة مقاطعة Larimer',
 
   'header.darkToLight': 'التبديل إلى الوضع الفاتح',
+  'header.buildInfo': 'الإصدار {version} · البناء {built} · البيانات حتى {date}',
   'header.darkToDark': 'التبديل إلى الوضع الداكن',
   'header.switchToEs': 'التبديل إلى الإسبانية',
   'header.switchToEn': 'التبديل إلى الإنجليزية',

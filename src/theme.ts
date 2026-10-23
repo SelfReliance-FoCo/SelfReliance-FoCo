@@ -19,6 +19,14 @@ export type ThemeColors = {
   headerText: string;
   headerSub: string;
   onPurple: string;
+  /** Foreground purple that clears 4.5:1 on bg and card. */
+  accent: string;
+  /** Filled call button. White label text. */
+  callFill: string;
+  /** "Confirm hours" and other warnings. */
+  warning: string;
+  /** Search field outline. At least 3:1 on bg and card. */
+  inputBorder: string;
 };
 
 export const lightColors: ThemeColors = {
@@ -28,7 +36,7 @@ export const lightColors: ThemeColors = {
   gold: '#f5a623',
   ink: '#1f1a2e',
   body: '#4a4458',
-  muted: '#7b7488',
+  muted: '#645c70',
   line: '#e6e1ee',
   bg: '#f7f5fb',
   card: '#ffffff',
@@ -38,6 +46,10 @@ export const lightColors: ThemeColors = {
   headerText: '#ffffff',
   headerSub: '#e9dffb',
   onPurple: '#ffffff',
+  accent: '#522f81',
+  callFill: '#2e7d32',
+  warning: '#7a3400',
+  inputBorder: '#8a8398',
 };
 
 export const darkColors: ThemeColors = {
@@ -57,6 +69,10 @@ export const darkColors: ThemeColors = {
   headerText: '#ffffff',
   headerSub: '#e9dffb',
   onPurple: '#ffffff',
+  accent: '#d7c4ee',
+  callFill: '#2e7d32',
+  warning: '#f6c177',
+  inputBorder: '#9b93ab',
 };
 
 /** Header bar stays the FoCo purple in both modes. */

@@ -9,7 +9,9 @@ import type { Resource } from '../data/types';
 import { areaMessage, catKey, certKey, useI18n } from '../i18n';
 import { call, directions, hasStreetAddress, open, prettyUrl } from '../lib/actions';
 import { useBackLayer } from '../lib/backStack';
+import { inkOnTint } from '../lib/contrast';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
+import { englishProps, Heading } from './a11y';
 import { FreeBadge } from './FreeBadge';
 
 type Props = {
@@ -27,6 +29,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
   const cert = resource.certGroup ? CERT_GROUP_MAP[resource.certGroup] : null;
   const freeCert = isFreeCertificate(resource);
   const area = t(areaMessage(resource.area));
+  const ink = inkOnTint(cat.color, colors.bg);
   const pill = cert
     ? t(freeCert ? 'detail.freeCert' : 'detail.cert', { short: t(certKey(cert.id, 'short')) })
     : t(catKey(resource.category, 'label'));
@@ -35,9 +38,9 @@ export function ResourceDetail({ resource, onClose }: Props) {
     <Modal visible animationType="slide" onRequestClose={handleClose} presentationStyle="pageSheet">
       <View style={[styles.sheet, { paddingTop: Math.max(insets.top, spacing.md), backgroundColor: colors.bg }]}>
         <View style={styles.topBar}>
-          <View style={[styles.pill, { backgroundColor: `${cat.color}1a` }]}>
-            <Ionicons name={cat.icon as never} size={16} color={cat.color} />
-            <Text style={[styles.pillText, { color: cat.color }]}>{pill}</Text>
+          <View style={[styles.pill, { backgroundColor: `${ink}1a` }]}>
+            <Ionicons name={cat.icon as never} size={16} color={ink} />
+            <Text style={[styles.pillText, { color: ink }]}>{pill}</Text>
           </View>
           <Pressable onPress={handleClose} hitSlop={12} accessibilityRole="button" accessibilityLabel={t('detail.close')}>
             <Ionicons name="close" size={28} color={colors.ink} />
@@ -46,24 +49,32 @@ export function ResourceDetail({ resource, onClose }: Props) {
 
         <ScrollView contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + spacing.xxl }]}>
           <View style={styles.headline}>
-            <Text style={[styles.name, { color: colors.ink }]}>{resource.name}</Text>
+            <Heading level={1} style={[styles.name, { color: colors.ink }]} {...englishProps()}>
+              {resource.name}
+            </Heading>
             {freeCert ? <FreeBadge /> : null}
           </View>
           <Text style={[styles.area, { color: colors.muted }]}>
             {freeCert ? t('detail.freeMeta', { area }) : area}
           </Text>
-          <Text style={[styles.desc, { color: colors.body }]}>{resource.description}</Text>
+          <Text style={[styles.desc, { color: colors.body }]} {...englishProps()}>
+            {resource.description}
+          </Text>
 
           {resource.hours ? (
             <View style={styles.infoRow}>
               <Ionicons name="time-outline" size={20} color={colors.muted} />
-              <Text style={[styles.infoText, { color: colors.body }]}>{resource.hours}</Text>
+              <Text style={[styles.infoText, { color: colors.body }]} {...englishProps()}>
+                {resource.hours}
+              </Text>
             </View>
           ) : null}
           {resource.address ? (
             <View style={styles.infoRow}>
               <Ionicons name="location-outline" size={20} color={colors.muted} />
-              <Text style={[styles.infoText, { color: colors.body }]}>{resource.address}</Text>
+              <Text style={[styles.infoText, { color: colors.body }]} {...englishProps()}>
+                {resource.address}
+              </Text>
             </View>
           ) : null}
 
@@ -72,7 +83,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
               <ActionButton
                 icon="call"
                 label={t('detail.call', { phone: resource.phone })}
-                color={colors.green}
+                color={colors.callFill}
                 onPress={() => call(resource.phone as string)}
               />
             ) : null}
@@ -96,7 +107,7 @@ export function ResourceDetail({ resource, onClose }: Props) {
               <ActionButton
                 icon="bus-outline"
                 label={t('detail.bus')}
-                color={colors.purple}
+                color={HEADER_PURPLE}
                 onPress={() => directions(resource.address as string, 'transit')}
               />
             ) : null}
@@ -109,7 +120,9 @@ export function ResourceDetail({ resource, onClose }: Props) {
             <View style={styles.tags}>
               {resource.tags.map((tag) => (
                 <View key={tag} style={[styles.tag, { backgroundColor: colors.purpleLight }]}>
-                  <Text style={[styles.tagText, { color: colors.purpleDark }]}>{tag}</Text>
+                  <Text style={[styles.tagText, { color: colors.purpleDark }]} {...englishProps()}>
+                    {tag}
+                  </Text>
                 </View>
               ))}
             </View>

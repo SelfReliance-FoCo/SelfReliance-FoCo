@@ -4,9 +4,11 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { OpenPlace } from '../data/openNowTypes';
 import { useI18n } from '../i18n';
 import { call } from '../lib/actions';
+import { inkOnTint } from '../lib/contrast';
 import { MAX_FONT, useLargePrint } from '../lib/fontScale';
 import type { PlaceStatus } from '../lib/openNowStatus';
 import { cardShadow, radius, spacing, useTheme } from '../theme';
+import { englishProps } from './a11y';
 
 type Props = {
   place: OpenPlace;
@@ -18,8 +20,8 @@ export function OpenNowCard({ place, status, onPress }: Props) {
   const { colors, isDark } = useTheme();
   const { t } = useI18n();
   const largePrint = useLargePrint();
-  const statusColor =
-    status.kind === 'open' ? colors.green : status.kind === 'later' ? '#b45309' : colors.muted;
+  const statusRaw = status.kind === 'open' ? colors.green : status.kind === 'later' ? colors.warning : colors.muted;
+  const statusColor = inkOnTint(statusRaw, colors.card, 0x22 / 255);
   return (
     <Pressable
       onPress={onPress}
@@ -31,16 +33,17 @@ export function OpenNowCard({ place, status, onPress }: Props) {
       ]}
       accessibilityRole="button"
       accessibilityLabel={`${place.name}. ${status.label}. ${place.who}. ${place.description}`}
+      {...englishProps()}
     >
       <View style={[styles.badge, { backgroundColor: `${statusColor}22` }]}>
         <Text style={[styles.badgeText, { color: statusColor }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
           {status.label}
         </Text>
       </View>
-      <Text style={[styles.name, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+      <Text style={[styles.name, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title} {...englishProps()}>
         {place.name}
       </Text>
-      <Text style={[styles.meta, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+      <Text style={[styles.meta, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome} {...englishProps()}>
         {place.who}
         {place.area === 'Larimer County' || place.area === 'Colorado' || place.area === 'National'
           ? ''
@@ -50,13 +53,14 @@ export function OpenNowCard({ place, status, onPress }: Props) {
         style={[styles.hours, { color: colors.body }]}
         numberOfLines={largePrint ? 4 : 2}
         maxFontSizeMultiplier={MAX_FONT.chrome}
+        {...englishProps()}
       >
         {place.hoursNote}
       </Text>
       {place.phone ? (
         <Pressable
           onPress={() => call(place.phone as string)}
-          style={[styles.call, { backgroundColor: colors.green }]}
+          style={[styles.call, { backgroundColor: colors.callFill }]}
           accessibilityRole="button"
           accessibilityLabel={t('card.callA11y', { name: place.name, phone: place.phone })}
         >

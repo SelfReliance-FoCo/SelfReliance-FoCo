@@ -6,6 +6,7 @@ export const he: Record<keyof typeof en, string> = {
   'app.subtitleShort': 'עזרה במחוז Larimer',
 
   'header.darkToLight': 'מעבר למצב בהיר',
+  'header.buildInfo': 'גרסה {version} · נבנתה {built} · נתונים נכונים ל-{date}',
   'header.darkToDark': 'מעבר למצב כהה',
   'header.switchToEs': 'מעבר לספרדית',
   'header.switchToEn': 'מעבר לאנגלית',

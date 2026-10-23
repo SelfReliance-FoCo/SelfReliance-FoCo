@@ -11,6 +11,7 @@ import type { Resource } from '../data/types';
 import { useI18n, type MessageKey } from '../i18n';
 import { useBackLayer } from '../lib/backStack';
 import { MAX_FONT } from '../lib/fontScale';
+import { radioProps } from '../components/a11y';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
 type Props = {
@@ -39,8 +40,8 @@ export function GiveNeedScreen({ area, onAreaChange, onBack, onSelect }: Props) 
         ListHeaderComponent={
           <View style={styles.top}>
             <Pressable onPress={handleClose} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
-              <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
-              <Text style={[styles.backText, { color: colors.purple }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+              <Ionicons name="arrow-back" size={20} color={colors.accent} />
+              <Text style={[styles.backText, { color: colors.accent }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
                 {t('common.resources')}
               </Text>
             </Pressable>
@@ -48,7 +49,7 @@ export function GiveNeedScreen({ area, onAreaChange, onBack, onSelect }: Props) 
               {t('give.lede')}
             </Text>
             <AreaFilter value={area} onChange={onAreaChange} />
-            <View style={styles.chips}>
+            <View style={styles.chips} accessibilityRole="radiogroup">
               {GIVE_NEED_CHIPS.map((c) => (
                 <MiniChip key={c.id} label={t(`give.${c.id}` as MessageKey)} active={kind === c.id} onPress={() => setKind(c.id)} />
               ))}
@@ -56,14 +57,18 @@ export function GiveNeedScreen({ area, onAreaChange, onBack, onSelect }: Props) 
             <Text style={[styles.blurb, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
               {t(blurbKey)}
             </Text>
-            <Text style={[styles.count, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+            <Text
+              style={[styles.count, { color: colors.muted }]}
+              maxFontSizeMultiplier={MAX_FONT.chrome}
+              accessibilityLiveRegion="polite"
+            >
               {t(list.length === 1 ? 'give.deskOne' : 'give.deskMany', { n: list.length })}
               {area === 'All' ? '' : t('home.inArea', { area: areaLabel(area, t) })}
             </Text>
           </View>
         }
         ListEmptyComponent={
-          <View style={styles.empty}>
+          <View style={styles.empty} accessibilityLiveRegion="polite">
             <Ionicons name="people-outline" size={40} color={colors.muted} />
             <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('give.empty', { area: areaLabel(area, t) })}</Text>
             <Text style={[styles.emptyText, { color: colors.muted }]}>{t('give.emptyHint')}</Text>
@@ -79,8 +84,7 @@ function MiniChip({ label, active, onPress }: { label: string; active: boolean; 
   return (
     <Pressable
       onPress={onPress}
-      accessibilityRole="button"
-      accessibilityState={{ selected: active }}
+      {...radioProps(active)}
       accessibilityLabel={label}
       style={[
         styles.chip,

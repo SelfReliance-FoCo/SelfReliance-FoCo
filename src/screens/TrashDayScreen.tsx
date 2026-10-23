@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
+import { Heading, radioProps } from '../components/a11y';
 import { Header } from '../components/Header';
 import { TrashZoneSelect } from '../components/TrashZoneSelect';
 import {
@@ -223,7 +224,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
       />
       <ScrollView contentContainerStyle={styles.body}>
         <Pressable onPress={handleClose} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
-          <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
+          <Ionicons name="arrow-back" size={20} color={colors.accent} />
           <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
         </Pressable>
         <AreaFilter value={area} onChange={onAreaChange} />
@@ -258,10 +259,10 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
 
         {showWeekdayChips ? (
           <>
-            <Text style={[styles.section, { color: colors.ink }]}>
+            <Heading level={2} style={[styles.section, { color: colors.ink }]}>
               {t('trash.usualDay')}
-            </Text>
-            <View style={styles.days} pointerEvents={chipsLocked ? 'none' : 'auto'}>
+            </Heading>
+            <View style={styles.days} accessibilityRole="radiogroup" pointerEvents={chipsLocked ? 'none' : 'auto'}>
               {SERVICE_DAYS.map((d) => {
                 const on = regular === d.id;
                 const label = t(dowKey(d.id));
@@ -269,8 +270,7 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
                   <Pressable
                     key={d.id}
                     onPress={() => saveDay(d.id)}
-                    accessibilityRole="button"
-                    accessibilityState={{ selected: on, disabled: chipsLocked }}
+                    {...radioProps(on, { disabled: chipsLocked })}
                     accessibilityLabel={label}
                     style={[
                       styles.day,
@@ -289,26 +289,34 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
 
         {hero ? (
           <View style={[styles.hero, { backgroundColor: todayIs ? HEADER_PURPLE : colors.card }]}>
-            <Text style={[styles.heroKicker, { color: todayIs ? '#e9dffb' : HEADER_PURPLE }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+            <Text style={[styles.heroKicker, { color: todayIs ? '#e9dffb' : colors.accent }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
               {hero.kicker}
             </Text>
-            <Text style={[styles.heroTitle, { color: todayIs ? '#fff' : colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+            <Heading
+              level={2}
+              style={[styles.heroTitle, { color: todayIs ? '#fff' : colors.ink }]}
+              maxFontSizeMultiplier={MAX_FONT.title}
+            >
               {hero.title}
-            </Text>
+            </Heading>
             <Text style={[styles.heroSub, { color: todayIs ? '#e9dffb' : colors.body }]} maxFontSizeMultiplier={MAX_FONT.title}>
               {hero.sub}
             </Text>
           </View>
         ) : region?.id === 'uninc-landfill' ? (
           <View style={[styles.hero, { backgroundColor: colors.card }]}>
-            <Text style={[styles.heroTitle, { color: colors.ink }]}>{t('trash.noCurbside')}</Text>
+            <Heading level={2} style={[styles.heroTitle, { color: colors.ink }]}>
+              {t('trash.noCurbside')}
+            </Heading>
             <Text style={[styles.heroSub, { color: colors.body }]}>{t('trash.noCurbsideSub')}</Text>
           </View>
         ) : (
           <Text style={[styles.hint, { color: colors.muted }]}>{t('trash.hintPick')}</Text>
         )}
 
-        <Text style={[styles.section, { color: colors.ink }]}>{t('trash.whatGoesOut')}</Text>
+        <Heading level={2} style={[styles.section, { color: colors.ink }]}>
+          {t('trash.whatGoesOut')}
+        </Heading>
         <View>
           {service.map((row) => (
             <ServiceRow key={row.title} {...row} />
@@ -316,8 +324,8 @@ export function TrashDayScreen({ area, onAreaChange, regionId, onRegionIdChange,
           {town === 'Loveland' && region?.id !== 'uninc-landfill' ? (
             <View style={[styles.listing, { backgroundColor: colors.card }, cardShadow(isDark)]}>
               <View style={styles.listingRow}>
-                <View style={[styles.iconWrap, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
-                  <Ionicons name="reload-outline" size={22} color={HEADER_PURPLE} />
+                <View style={[styles.iconWrap, { backgroundColor: `${colors.accent}1a` }]}>
+                  <Ionicons name="reload-outline" size={22} color={colors.accent} />
                 </View>
                 <View style={styles.listingBody}>
                   <View style={styles.listingHead}>
@@ -551,14 +559,14 @@ function ServiceRow({
       accessibilityLabel={`${title}. ${status}. ${place}. ${note}.`}
     >
       <View style={styles.listingRow}>
-        <View style={[styles.iconWrap, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
-          <Ionicons name={icon as never} size={22} color={HEADER_PURPLE} />
+        <View style={[styles.iconWrap, { backgroundColor: `${colors.accent}1a` }]}>
+          <Ionicons name={icon as never} size={22} color={colors.accent} />
         </View>
         <View style={styles.listingBody}>
           <Text style={[styles.listingName, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
             {title}
           </Text>
-          <Text style={[styles.statusLine, { color: HEADER_PURPLE }]} maxFontSizeMultiplier={MAX_FONT.title}>
+          <Text style={[styles.statusLine, { color: colors.accent }]} maxFontSizeMultiplier={MAX_FONT.title}>
             {status}
           </Text>
           <Text style={[styles.listingMeta, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
@@ -578,12 +586,12 @@ function Action({ icon, label, onPress }: { icon: string; label: string; onPress
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.action, { borderColor: HEADER_PURPLE, backgroundColor: colors.card }]}
+      style={[styles.action, { borderColor: colors.accent, backgroundColor: colors.card }]}
       accessibilityRole="button"
       accessibilityLabel={label}
     >
-      <Ionicons name={icon as never} size={20} color={HEADER_PURPLE} />
-      <Text style={[styles.actionText, { color: colors.purple }]}>{label}</Text>
+      <Ionicons name={icon as never} size={20} color={colors.accent} />
+      <Text style={[styles.actionText, { color: colors.accent }]}>{label}</Text>
     </Pressable>
   );
 }

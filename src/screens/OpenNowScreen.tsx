@@ -13,6 +13,7 @@ import { useI18n, type MessageKey, dowKey, monthKey } from '../i18n';
 import { useBackLayer } from '../lib/backStack';
 import { useDenverNow } from '../lib/denverClock';
 import { matchesOpenTown, statusFor } from '../lib/openNowStatus';
+import { radioProps } from '../components/a11y';
 import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
 
 type FilterChip = 'open' | 'later' | 'all';
@@ -64,18 +65,18 @@ export function OpenNowScreen({ area, onAreaChange, onBack, onSelect }: Props) {
         ListHeaderComponent={
           <View style={styles.top}>
             <Pressable onPress={handleClose} style={styles.back} accessibilityRole="button" accessibilityLabel={t('common.backResources')}>
-              <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
+              <Ionicons name="arrow-back" size={20} color={colors.accent} />
               <Text style={[styles.backText, { color: colors.purple }]}>{t('common.resources')}</Text>
             </Pressable>
             <Text style={[styles.lede, { color: colors.body }]}>{t('open.lede')}</Text>
             <AreaFilter value={area} onChange={onAreaChange} />
-            <View style={styles.chips}>
+            <View style={styles.chips} accessibilityRole="radiogroup">
               <MiniChip label={t('open.allNeeds')} active={need === 'all'} onPress={() => setNeed('all')} />
               {OPEN_NEEDS.map((n) => (
                 <MiniChip key={n.id} label={t(`open.${n.id}` as MessageKey)} active={need === n.id} onPress={() => setNeed(n.id)} />
               ))}
             </View>
-            <View style={styles.chips}>
+            <View style={styles.chips} accessibilityRole="radiogroup">
               <MiniChip label={t('open.countNow', { n: openCount })} active={chip === 'open'} onPress={() => setChip('open')} />
               <MiniChip label={t('open.later')} active={chip === 'later'} onPress={() => setChip('later')} />
               <MiniChip label={t('open.allHours')} active={chip === 'all'} onPress={() => setChip('all')} />
@@ -83,7 +84,7 @@ export function OpenNowScreen({ area, onAreaChange, onBack, onSelect }: Props) {
           </View>
         }
         ListEmptyComponent={
-          <View style={styles.empty}>
+          <View style={styles.empty} accessibilityLiveRegion="polite">
             <Ionicons name="time-outline" size={40} color={colors.muted} />
             <Text style={[styles.emptyTitle, { color: colors.ink }]}>
               {chip === 'open' ? t('open.emptyNow', { area: areaLabel(area, t) }) : t('open.emptyListed', { area: areaLabel(area, t) })}
@@ -101,8 +102,7 @@ function MiniChip({ label, active, onPress }: { label: string; active: boolean; 
   return (
     <Pressable
       onPress={onPress}
-      accessibilityRole="button"
-      accessibilityState={{ selected: active }}
+      {...radioProps(active)}
       accessibilityLabel={label}
       style={[
         styles.chip,

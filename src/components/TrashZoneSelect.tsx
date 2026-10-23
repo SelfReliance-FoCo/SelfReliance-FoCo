@@ -13,7 +13,8 @@ import {
 import { dowKey, useI18n } from '../i18n';
 import { type ServiceDow } from '../lib/trashCalendar';
 import { MAX_FONT } from '../lib/fontScale';
-import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
+import { radius, spacing, useTheme } from '../theme';
+import { Heading } from './a11y';
 
 type RememberedDays = Record<string, ServiceDow>;
 
@@ -58,9 +59,9 @@ export function TrashZoneSelect({
 
   return (
     <View style={styles.wrap}>
-      <Text style={[styles.section, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+      <Heading level={2} style={[styles.section, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
         {t('trash.region')}
-      </Text>
+      </Heading>
       <Pressable
         onPress={() => setOpen((was) => !was)}
         accessibilityRole="button"
@@ -70,7 +71,7 @@ export function TrashZoneSelect({
         }
         style={[
           styles.bar,
-          { backgroundColor: colors.card, borderColor: selected ? HEADER_PURPLE : colors.line },
+          { backgroundColor: colors.card, borderColor: selected ? colors.accent : colors.line },
         ]}
       >
         <View style={{ flex: 1 }}>
@@ -88,7 +89,7 @@ export function TrashZoneSelect({
               : t('trash.townsHint')}
           </Text>
         </View>
-        <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={22} color={HEADER_PURPLE} />
+        <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={22} color={colors.accent} />
       </Pressable>
 
       {open ? (
@@ -155,9 +156,9 @@ function TownGroup({
 
   return (
     <View>
-      <Text style={[styles.town, { color: HEADER_PURPLE, borderBottomColor: colors.line }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+      <Heading level={3} style={[styles.town, { color: colors.accent, borderBottomColor: colors.line }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
         {town === 'Unincorporated' ? t('area.unincorporated') : town}
-      </Text>
+      </Heading>
       {byDow.map((group) => (
         <View key={`${town}-${group.dow}`}>
           <Text style={[styles.group, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
@@ -216,10 +217,10 @@ function RegionRow({
       accessibilityRole="button"
       accessibilityState={{ selected: on }}
       accessibilityLabel={`${region.label}, ${region.town}. ${region.where}`}
-      style={[styles.row, on && { backgroundColor: `${HEADER_PURPLE}14` }]}
+      style={[styles.row, on && { backgroundColor: `${colors.accent}14` }]}
     >
       <View style={{ flex: 1 }}>
-        <Text style={[styles.rowTitle, { color: on ? HEADER_PURPLE : colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+        <Text style={[styles.rowTitle, { color: on ? colors.accent : colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
           {region.label}
         </Text>
         <Text style={[styles.rowSub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
@@ -227,7 +228,7 @@ function RegionRow({
           {region.where}
         </Text>
       </View>
-      {on ? <Ionicons name="checkmark" size={20} color={HEADER_PURPLE} /> : null}
+      {on ? <Ionicons name="checkmark" size={20} color={colors.accent} /> : null}
     </Pressable>
   );
 }

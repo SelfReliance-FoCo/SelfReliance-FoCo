@@ -4,7 +4,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useI18n, type MessageKey } from '../i18n';
 import { MAX_FONT, useLargePrint } from '../lib/fontScale';
-import { HEADER_PURPLE, spacing, useTheme } from '../theme';
+import { spacing, useTheme } from '../theme';
+import { tabProps } from './a11y';
 
 export type TabId = 'home' | 'students' | 'homeless' | 'disability';
 
@@ -39,6 +40,8 @@ export function TabBar({ active, onChange }: Props) {
   const { t } = useI18n();
   return (
     <View
+      accessibilityRole="tablist"
+      accessibilityLabel={t('app.title')}
       style={[
         styles.bar,
         { paddingBottom: Math.max(insets.bottom, spacing.sm), backgroundColor: colors.card, borderTopColor: colors.line },
@@ -53,13 +56,12 @@ export function TabBar({ active, onChange }: Props) {
             key={tab.id}
             onPress={() => onChange(tab.id)}
             style={styles.tab}
-            accessibilityRole="tab"
-            accessibilityState={{ selected: isActive }}
+            {...tabProps(isActive)}
             accessibilityLabel={full}
           >
-            <Ionicons name={(isActive ? tab.iconActive : tab.icon) as never} size={24} color={isActive ? HEADER_PURPLE : colors.muted} />
+            <Ionicons name={(isActive ? tab.iconActive : tab.icon) as never} size={24} color={isActive ? colors.accent : colors.muted} />
             <Text
-              style={[styles.label, { color: isActive ? HEADER_PURPLE : colors.muted }]}
+              style={[styles.label, { color: isActive ? colors.accent : colors.muted }]}
               numberOfLines={2}
               maxFontSizeMultiplier={MAX_FONT.chrome}
             >
@@ -79,5 +81,5 @@ const styles = StyleSheet.create({
     paddingTop: spacing.sm,
   },
   tab: { flex: 1, minWidth: 0, alignItems: 'center', gap: 2, paddingVertical: 6, paddingHorizontal: 2 },
-  label: { fontSize: 10, fontWeight: '600', textAlign: 'center' },
+  label: { fontSize: 12, fontWeight: '600', textAlign: 'center' },
 });
