@@ -1,7 +1,23 @@
 const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 
+const { isAllowedExternalUrl } = require('./externalUrl');
+
 const isDev = !app.isPackaged;
+
+function openExternalIfAllowed(url) {
+  if (!isAllowedExternalUrl(url)) return;
+  Promise.resolve(shell.openExternal(url)).catch(() => {});
+}
+
+function isDevNavigation(url) {
+  if (!isDev || !process.env.FOCO_DEV_URL) return false;
+  try {
+    return new URL(url).origin === new URL(process.env.FOCO_DEV_URL).origin;
+  } catch {
+    return false;
+  }
+}
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -26,8 +42,14 @@ function createWindow() {
   }
 
   win.webContents.setWindowOpenHandler(({ url }) => {
-    shell.openExternal(url);
+    openExternalIfAllowed(url);
     return { action: 'deny' };
+  });
+
+  win.webContents.on('will-navigate', (event, url) => {
+    if (isDevNavigation(url)) return;
+    event.preventDefault();
+    openExternalIfAllowed(url);
   });
 }
 

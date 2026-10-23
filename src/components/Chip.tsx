@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { MAX_FONT } from '../lib/fontScale';
 import { HEADER_PURPLE, radius, useTheme } from '../theme';
+import { radioProps } from './a11y';
 
 type Props = {
   label: string;
@@ -23,8 +24,7 @@ export function Chip({ label, icon, active, onPress, small, accessibilityLabel }
         small && styles.chipSmall,
         { backgroundColor: active ? HEADER_PURPLE : colors.card, borderColor: active ? HEADER_PURPLE : colors.line },
       ]}
-      accessibilityRole="button"
-      accessibilityState={{ selected: active }}
+      {...radioProps(active)}
       accessibilityLabel={accessibilityLabel ?? label}
     >
       {icon ? <Ionicons name={icon as never} size={15} color={active ? '#fff' : colors.purple} /> : null}

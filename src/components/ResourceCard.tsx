@@ -7,7 +7,9 @@ import { isFreeCertificate } from '../data/resources';
 import type { Resource } from '../data/types';
 import { areaMessage, catKey, certKey, useI18n } from '../i18n';
 import { call } from '../lib/actions';
+import { inkOnTint } from '../lib/contrast';
 import { cardShadow, radius, spacing, useTheme } from '../theme';
+import { englishProps } from './a11y';
 import { FreeBadge } from './FreeBadge';
 
 type Props = {
@@ -29,6 +31,7 @@ export function ResourceCard({ resource, onPress, showCategory = true }: Props) 
       })
     : `${showCategory ? `${t(catKey(resource.category, 'short'))} · ` : ''}${area}`;
   const a11yExtra = freeCert ? t('card.freeCertA11y') : '';
+  const ink = inkOnTint(cat.color, colors.card);
   return (
     <View style={[styles.card, { backgroundColor: colors.card }, cardShadow(isDark)]}>
       <Pressable
@@ -36,17 +39,20 @@ export function ResourceCard({ resource, onPress, showCategory = true }: Props) 
         style={({ pressed }) => [styles.row, pressed && styles.pressed]}
         accessibilityRole="button"
         accessibilityLabel={`${resource.name}${a11yExtra ? `. ${a11yExtra}` : ''}. ${resource.description}`}
+        {...englishProps()}
       >
-        <View style={[styles.iconWrap, { backgroundColor: `${cat.color}1a` }]}>
-          <Ionicons name={cat.icon as never} size={22} color={cat.color} />
+        <View style={[styles.iconWrap, { backgroundColor: `${ink}1a` }]}>
+          <Ionicons name={cat.icon as never} size={22} color={ink} />
         </View>
         <View style={styles.body}>
           <View style={styles.headline}>
-            <Text style={[styles.name, { color: colors.ink }]}>{resource.name}</Text>
+            <Text style={[styles.name, { color: colors.ink }]} {...englishProps()}>
+              {resource.name}
+            </Text>
             {freeCert ? <FreeBadge /> : null}
           </View>
           <Text style={[styles.meta, { color: colors.muted }]}>{certLine}</Text>
-          <Text style={[styles.desc, { color: colors.body }]} numberOfLines={3}>
+          <Text style={[styles.desc, { color: colors.body }]} numberOfLines={3} {...englishProps()}>
             {resource.description}
           </Text>
         </View>
@@ -54,7 +60,7 @@ export function ResourceCard({ resource, onPress, showCategory = true }: Props) 
       {resource.phone ? (
         <Pressable
           onPress={() => call(resource.phone as string)}
-          style={({ pressed }) => [styles.callBtn, { backgroundColor: colors.green }, pressed && styles.callPressed]}
+          style={({ pressed }) => [styles.callBtn, { backgroundColor: colors.callFill }, pressed && styles.callPressed]}
           accessibilityRole="button"
           accessibilityLabel={t('card.callA11y', { name: resource.name, phone: resource.phone })}
           hitSlop={8}

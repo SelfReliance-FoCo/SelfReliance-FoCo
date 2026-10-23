@@ -12,10 +12,15 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { APP_LANGUAGES, languageOption, useI18n, type AppLanguage } from '../i18n';
+import { APP_LANGUAGES, isRtlLanguage, languageOption, useI18n, type AppLanguage } from '../i18n';
 import { useBackLayer } from '../lib/backStack';
 import { MAX_FONT } from '../lib/fontScale';
-import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
+import { radius, spacing, useTheme } from '../theme';
+import { Heading, radioProps } from './a11y';
+
+function scriptDirection(id: AppLanguage): 'rtl' | 'ltr' {
+  return isRtlLanguage(id) ? 'rtl' : 'ltr';
+}
 
 /** Language tile: tap the bar, then scroll the list. The page behind does not move. */
 export function LanguagePicker() {
@@ -30,28 +35,31 @@ export function LanguagePicker() {
 
   return (
     <View style={styles.wrap}>
-      <Text style={[styles.section, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+      <Heading level={2} style={[styles.section, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
         {t('lang.listLabel')}
-      </Text>
+      </Heading>
       <Pressable
         onPress={() => setOpen(true)}
         accessibilityRole="button"
         accessibilityState={{ expanded: open }}
         accessibilityLabel={t('header.languageA11y', { name: current.nativeName })}
-        style={[styles.bar, { backgroundColor: colors.card, borderColor: HEADER_PURPLE }]}
+        style={[styles.bar, { backgroundColor: colors.card, borderColor: colors.accent }]}
       >
-        <View style={[styles.iconWrap, { backgroundColor: `${HEADER_PURPLE}1a` }]}>
-          <Ionicons name="language" size={22} color={HEADER_PURPLE} />
+        <View style={[styles.iconWrap, { backgroundColor: `${colors.accent}1a` }]}>
+          <Ionicons name="language" size={22} color={colors.accent} />
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.barTitle, { color: colors.ink }]} maxFontSizeMultiplier={MAX_FONT.title}>
+          <Text
+            style={[styles.barTitle, { color: colors.ink, writingDirection: scriptDirection(language) }]}
+            maxFontSizeMultiplier={MAX_FONT.title}
+          >
             {current.nativeName}
           </Text>
           <Text style={[styles.barSub, { color: colors.muted }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
             {sub}
           </Text>
         </View>
-        <Ionicons name="chevron-down" size={22} color={HEADER_PURPLE} />
+        <Ionicons name="chevron-down" size={22} color={colors.accent} />
       </Pressable>
       <Text style={[styles.honest, { color: colors.muted }]}>{t('lang.honest')}</Text>
       <LanguageSheet
@@ -108,7 +116,7 @@ function LanguageSheet({
 }) {
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const { t } = useI18n();
   const { handleClose } = useBackLayer(open, onClose);
   const listMax = Math.min(420, Math.max(220, height - insets.top - insets.bottom - 160));
@@ -136,13 +144,13 @@ function LanguageSheet({
               marginTop: insets.top + 56,
               marginBottom: insets.bottom + spacing.lg,
               backgroundColor: colors.card,
-              borderColor: isDark ? colors.line : HEADER_PURPLE,
+              borderColor: colors.accent,
             },
           ]}
         >
-          <Text style={[styles.menuLabel, { color: HEADER_PURPLE }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
+          <Heading level={2} style={[styles.menuLabel, { color: colors.accent }]} maxFontSizeMultiplier={MAX_FONT.chrome}>
             {t('lang.listLabel')}
-          </Text>
+          </Heading>
           <ScrollView
             style={[styles.scroll, { maxHeight: listMax }]}
             nestedScrollEnabled
@@ -174,7 +182,7 @@ function LanguageRows({
   const { colors } = useTheme();
   const { t } = useI18n();
   return (
-    <>
+    <View accessibilityRole="radiogroup">
       {APP_LANGUAGES.map((opt) => {
         const on = opt.id === selected;
         const meta =
@@ -183,14 +191,16 @@ function LanguageRows({
           <Pressable
             key={opt.id}
             onPress={() => onPick(opt.id)}
-            accessibilityRole="button"
-            accessibilityState={{ selected: on }}
+            {...radioProps(on)}
             accessibilityLabel={on ? `${opt.nativeName}. ${t('lang.selected')}` : t('lang.a11yUse', { name: opt.nativeName })}
-            style={[styles.row, on && { backgroundColor: `${HEADER_PURPLE}14` }]}
+            style={[styles.row, on && { backgroundColor: `${colors.accent}14` }]}
           >
             <View style={{ flex: 1 }}>
               <Text
-                style={[styles.rowTitle, { color: on ? HEADER_PURPLE : colors.ink }]}
+                style={[
+                  styles.rowTitle,
+                  { color: on ? colors.accent : colors.ink, writingDirection: scriptDirection(opt.id) },
+                ]}
                 maxFontSizeMultiplier={MAX_FONT.title}
               >
                 {opt.nativeName}
@@ -199,12 +209,12 @@ function LanguageRows({
                 {on ? t('lang.selected') : meta}
               </Text>
             </View>
-            <Text style={[styles.rowCode, { color: on ? HEADER_PURPLE : colors.muted }]}>{opt.code}</Text>
-            {on ? <Ionicons name="checkmark" size={20} color={HEADER_PURPLE} /> : null}
+            <Text style={[styles.rowCode, { color: on ? colors.accent : colors.muted }]}>{opt.code}</Text>
+            {on ? <Ionicons name="checkmark" size={20} color={colors.accent} /> : null}
           </Pressable>
         );
       })}
-    </>
+    </View>
   );
 }
 
@@ -229,8 +239,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  barTitle: { fontSize: 17, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
-  barSub: { fontSize: 13, marginTop: 3, lineHeight: 18, textAlign: 'left', writingDirection: 'ltr' },
+  barTitle: { fontSize: 17, fontWeight: '800' },
+  barSub: { fontSize: 13, marginTop: 3, lineHeight: 18 },
   honest: {
     paddingHorizontal: spacing.lg,
     fontSize: 13,
@@ -295,9 +305,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing.sm,
     minHeight: 56,
-    direction: 'ltr',
   },
-  rowTitle: { fontSize: 16, fontWeight: '800', textAlign: 'left', writingDirection: 'ltr' },
-  rowSub: { fontSize: 13, marginTop: 2, lineHeight: 18, textAlign: 'left', writingDirection: 'ltr' },
+  rowTitle: { fontSize: 16, fontWeight: '800' },
+  rowSub: { fontSize: 13, marginTop: 2, lineHeight: 18 },
   rowCode: { fontSize: 13, fontWeight: '800' },
 });

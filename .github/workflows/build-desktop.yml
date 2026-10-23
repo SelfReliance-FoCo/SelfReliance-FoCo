@@ -12,66 +12,93 @@ on:
       - "app.json"
       - "package.json"
       - "package-lock.json"
+      - "scripts/**"
+      - ".npmrc"
       - ".github/workflows/build-desktop.yml"
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: build-desktop-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run check:all
+
   windows:
+    needs: check
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          node-version: "20"
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
           cache: npm
-      - run: npm install
-      - run: npx expo export --platform web --output-dir dist-web
+      - run: npm ci
+      - run: node scripts/install-allowed.mjs
+      - run: node scripts/export-web.mjs
       - name: Build Windows installer
         run: npx electron-builder --win nsis --config electron-builder.yml
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: windows-setup
           path: release/Self-Reliance-FoCo-Setup.exe
-      - name: Attach to release
-        if: github.event_name == 'release'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: release/Self-Reliance-FoCo-Setup.exe
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          if-no-files-found: error
 
   mac:
+    needs: check
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          node-version: "20"
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
           cache: npm
-      - run: npm install
-      - run: npx expo export --platform web --output-dir dist-web
+      - run: npm ci
+      - run: node scripts/install-allowed.mjs
+      - run: node scripts/export-web.mjs
       - name: Build Mac DMG
         run: npx electron-builder --mac dmg --config electron-builder.yml
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
-      - name: Upload Mac artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: mac-dmg
           path: release/Self-Reliance-FoCo.dmg
-      - name: Attach to release
-        if: github.event_name == 'release'
-        uses: softprops/action-gh-release@v2
+          if-no-files-found: error
+
+  publish:
+    needs: [windows, mac]
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
-          files: release/Self-Reliance-FoCo.dmg
+          path: release-files
+      - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
+        with:
+          files: |
+            release-files/windows-setup/Self-Reliance-FoCo-Setup.exe
+            release-files/mac-dmg/Self-Reliance-FoCo.dmg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

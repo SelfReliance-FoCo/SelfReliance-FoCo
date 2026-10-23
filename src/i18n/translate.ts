@@ -58,6 +58,10 @@ export function translate(lang: AppLanguage, key: MessageKey, vars?: Vars): stri
   return interpolate(dict[key] ?? en[key], vars);
 }
 
+export function isRtlLanguage(lang: AppLanguage): boolean {
+  return lang === 'ar' || lang === 'he';
+}
+
 export function languageOption(id: AppLanguage): LanguageOption {
   return APP_LANGUAGES.find((row) => row.id === id) ?? APP_LANGUAGES[0];
 }

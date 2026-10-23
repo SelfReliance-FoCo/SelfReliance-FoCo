@@ -6,6 +6,7 @@ export const es: Record<keyof typeof en, string> = {
   'app.subtitleShort': 'Ayuda del condado de Larimer',
 
   'header.darkToLight': 'Cambiar a modo claro',
+  'header.buildInfo': 'Versión {version} · compilada el {built} · datos al {date}',
   'header.darkToDark': 'Cambiar a modo oscuro',
   'header.switchToEs': 'Cambiar a español',
   'header.switchToEn': 'Cambiar a inglés',

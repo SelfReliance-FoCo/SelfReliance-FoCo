@@ -4,13 +4,13 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useI18n } from '../i18n';
 import { MAX_FONT } from '../lib/fontScale';
 import { call } from '../lib/actions';
-import { HEADER_PURPLE, radius, spacing, useTheme } from '../theme';
+import { radius, spacing, useTheme } from '../theme';
 
 export function QuickHelp() {
   const { colors } = useTheme();
   const { t } = useI18n();
   const lines = [
-    { label: '2-1-1', sub: t('quick.211sub'), number: '211', color: HEADER_PURPLE },
+    { label: '2-1-1', sub: t('quick.211sub'), number: '211', color: colors.accent },
     { label: '9-8-8', sub: t('quick.988sub'), number: '988', color: colors.red },
   ];
   return (

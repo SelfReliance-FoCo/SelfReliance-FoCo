@@ -5,6 +5,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { AreaFilter, areaLabel } from '../components/AreaFilter';
 import { Chip } from '../components/Chip';
 import { ChipRow } from '../components/ChipRow';
+import { Heading } from '../components/a11y';
 import { Header } from '../components/Header';
 import { HomeTools } from '../components/HomeTools';
 import { LanguagePicker } from '../components/LanguagePicker';
@@ -56,7 +57,8 @@ import type { Category, CategoryId, Resource } from '../data/types';
 import { catKey, useI18n, type MessageKey } from '../i18n';
 import { useBackLayer } from '../lib/backStack';
 import { useLargePrint } from '../lib/fontScale';
-import { HEADER_PURPLE, cardShadow, radius, spacing, useTheme } from '../theme';
+import { inkOnTint } from '../lib/contrast';
+import { cardShadow, radius, spacing, useTheme } from '../theme';
 
 type Props = {
   onSelect: (r: Resource) => void;
@@ -202,8 +204,8 @@ export function HomeScreen({
                 accessibilityRole="button"
                 hitSlop={8}
               >
-                <Ionicons name="arrow-back" size={20} color={HEADER_PURPLE} />
-                <Text style={[styles.backText, { color: colors.purple }]}>{t('home.back')}</Text>
+                <Ionicons name="arrow-back" size={20} color={colors.accent} />
+                <Text style={[styles.backText, { color: colors.accent }]}>{t('home.back')}</Text>
               </Pressable>
               {openCat === 'language' ? <LanguagePicker /> : null}
               {openCat === 'pregnancy' ? (
@@ -285,14 +287,14 @@ export function HomeScreen({
                 </ChipRow>
               ) : null}
               <AreaFilter value={area} onChange={onAreaChange} />
-              <Text style={[styles.count, { color: colors.muted, paddingTop: spacing.md }]}>
+              <Text style={[styles.count, { color: colors.muted, paddingTop: spacing.md }]} accessibilityLiveRegion="polite">
                 {t(catResources.length === 1 ? 'home.countOne' : 'home.countMany', { n: catResources.length })}
                 {inAreaNote}
               </Text>
             </View>
           }
           ListEmptyComponent={
-            <View style={styles.empty}>
+            <View style={styles.empty} accessibilityLiveRegion="polite">
               <Ionicons name="map-outline" size={40} color={colors.muted} />
               <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('home.emptyTitle', { area: areaLabel(area, t) })}</Text>
               <Text style={[styles.emptyText, { color: colors.muted }]}>{emptyHint}</Text>
@@ -317,7 +319,7 @@ export function HomeScreen({
             <SearchBar value={query} onChange={setQuery} />
             <AreaFilter value={area} onChange={onAreaChange} />
             {searching ? (
-              <Text style={[styles.count, { color: colors.muted }]}>
+              <Text style={[styles.count, { color: colors.muted }]} accessibilityLiveRegion="polite">
                 {t(results.length === 1 ? 'home.matchOne' : 'home.matchMany', { n: results.length })}
                 {inAreaNote}
               </Text>
@@ -331,9 +333,9 @@ export function HomeScreen({
                   onGiveNeed={onGiveNeed}
                   onOfflineMaps={onOfflineMaps}
                 />
-                <Text style={[styles.sectionTitle, { color: colors.ink }]}>
+                <Heading level={2} style={[styles.sectionTitle, { color: colors.ink }]}>
                   {area === 'All' ? t('home.need') : t('home.needIn', { area: areaLabel(area, t) })}
-                </Text>
+                </Heading>
                 <View style={styles.grid}>
                   {CATEGORIES.map((c) => (
                     <CategoryTile
@@ -359,7 +361,7 @@ export function HomeScreen({
         }
         ListEmptyComponent={
           searching ? (
-            <View style={styles.empty}>
+            <View style={styles.empty} accessibilityLiveRegion="polite">
               <Ionicons name="search-outline" size={40} color={colors.muted} />
               <Text style={[styles.emptyTitle, { color: colors.ink }]}>{t('home.searchEmptyTitle', { query: query.trim() })}</Text>
               <Text style={[styles.emptyText, { color: colors.muted }]}>{t('home.searchEmptyText')}</Text>
@@ -375,6 +377,7 @@ function CategoryTile({ category, count, onPress }: { category: Category; count:
   const { colors, isDark } = useTheme();
   const { t } = useI18n();
   const label = t(catKey(category.id, 'label'));
+  const ink = inkOnTint(category.color, colors.card);
   return (
     <Pressable
       onPress={onPress}
@@ -382,8 +385,8 @@ function CategoryTile({ category, count, onPress }: { category: Category; count:
       accessibilityRole="button"
       accessibilityLabel={t('home.tileA11y', { label, n: count })}
     >
-      <View style={[styles.tileIcon, { backgroundColor: `${category.color}1a` }]}>
-        <Ionicons name={category.icon as never} size={26} color={category.color} />
+      <View style={[styles.tileIcon, { backgroundColor: `${ink}1a` }]}>
+        <Ionicons name={category.icon as never} size={26} color={ink} />
       </View>
       <Text style={[styles.tileLabel, { color: colors.ink }]}>{label}</Text>
       <Text style={[styles.tileCount, { color: colors.muted }]}>{count}</Text>

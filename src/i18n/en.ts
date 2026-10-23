@@ -5,6 +5,7 @@ export const en = {
 
   'header.darkToLight': 'Switch to light mode',
   'header.darkToDark': 'Switch to dark mode',
+  'header.buildInfo': 'Version {version} · built {built} · data as of {date}',
   'header.switchToEs': 'Switch to Spanish',
   'header.switchToEn': 'Switch to English',
   'header.switchToLang': 'Switch to {name}',

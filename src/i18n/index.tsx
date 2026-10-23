@@ -1,11 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, createElement, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { I18nManager, Platform } from 'react-native';
 
 import type { Area, CategoryId } from '../data/types';
 import {
   LANGUAGE_STORAGE_KEY,
   deviceLanguage,
   isAppLanguage,
+  isRtlLanguage,
   nextLanguage,
   translate as translateLang,
   type AppLanguage,
@@ -23,6 +25,7 @@ export {
   monthKey,
   deviceLanguage,
   isAppLanguage,
+  isRtlLanguage,
   languageOption,
   nextLanguage,
   LANGUAGE_STORAGE_KEY,
@@ -37,8 +40,22 @@ type LanguageContextValue = {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
+function applyDocumentLanguage(lang: AppLanguage) {
+  const rtl = isRtlLanguage(lang);
+  if (Platform.OS === 'web' && typeof document !== 'undefined') {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+  }
+  if (I18nManager.isRTL !== rtl) {
+    I18nManager.allowRTL(true);
+    I18nManager.forceRTL(rtl);
+  }
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<AppLanguage>(deviceLanguage);
+
+  applyDocumentLanguage(language);
 
   useEffect(() => {
     void AsyncStorage.getItem(LANGUAGE_STORAGE_KEY).then((saved) => {

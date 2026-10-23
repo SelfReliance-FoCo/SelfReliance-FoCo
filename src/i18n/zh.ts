@@ -6,6 +6,7 @@ export const zh: Record<keyof typeof en, string> = {
   'app.subtitleShort': 'Larimer County 求助',
 
   'header.darkToLight': '切换到浅色模式',
+  'header.buildInfo': '版本 {version} · 构建于 {built} · 资料截至 {date}',
   'header.darkToDark': '切换到深色模式',
   'header.switchToEs': '切换到西班牙语',
   'header.switchToEn': '切换到英语',

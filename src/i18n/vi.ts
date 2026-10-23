@@ -6,6 +6,7 @@ export const vi: Record<keyof typeof en, string> = {
   'app.subtitleShort': 'Trợ giúp Larimer County',
 
   'header.darkToLight': 'Chuyển sang chế độ sáng',
+  'header.buildInfo': 'Phiên bản {version} · dựng {built} · dữ liệu đến {date}',
   'header.darkToDark': 'Chuyển sang chế độ tối',
   'header.switchToEs': 'Chuyển sang tiếng Tây Ban Nha',
   'header.switchToEn': 'Chuyển sang tiếng Anh',

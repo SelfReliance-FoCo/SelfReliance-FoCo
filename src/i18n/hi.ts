@@ -6,6 +6,7 @@ export const hi: Record<keyof typeof en, string> = {
   'app.subtitleShort': 'Larimer County की मदद',
 
   'header.darkToLight': 'लाइट मोड पर जाएँ',
+  'header.buildInfo': 'संस्करण {version} · निर्माण {built} · जानकारी {date} तक',
   'header.darkToDark': 'डार्क मोड पर जाएँ',
   'header.switchToEs': 'स्पेनिश पर जाएँ',
   'header.switchToEn': 'अंग्रेज़ी पर जाएँ',

@@ -6,6 +6,7 @@ export const ko: Record<keyof typeof en, string> = {
   'app.subtitleShort': 'Larimer County 도움',
 
   'header.darkToLight': '라이트 모드로 전환',
+  'header.buildInfo': '버전 {version} · 빌드 {built} · 자료 기준 {date}',
   'header.darkToDark': '다크 모드로 전환',
   'header.switchToEs': '스페인어로 전환',
   'header.switchToEn': '영어로 전환',
