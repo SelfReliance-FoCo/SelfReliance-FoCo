@@ -3,7 +3,7 @@
 import { readFileSync } from 'node:fs';
 
 const CATEGORIES = new Set([
-  'food', 'housing', 'shelter', 'employment', 'benefits', 'utilities', 'health', 'transportation',
+  'food', 'housing', 'shelter', 'employment', 'benefits', 'utilities', 'health', 'transportation', 'driving',
   'phone', 'legal', 'seniors_disability', 'family_children', 'veterans', 'education', 'crisis',
   'clothing', 'childcare', 'immigrant_refugee', 'addiction', 'special_needs', 'holiday', 'dental',
   'disaster', 'identification', 'pets', 'lgbtq', 'weather', 'reentry', 'household',

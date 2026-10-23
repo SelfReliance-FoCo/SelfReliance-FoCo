@@ -25,6 +25,7 @@ import {
   filterByArea,
   isChildcareResource,
   isDivorceResource,
+  isDrivingResource,
   isLanguageResource,
   isMarriageResource,
   isPregnancyResource,
@@ -115,6 +116,7 @@ export function HomeScreen({
     next.divorce = inArea.filter(isDivorceResource).length;
     next.religion = inArea.filter(isReligionResource).length;
     next.childcare = inArea.filter(isChildcareResource).length;
+    next.driving = inArea.filter(isDrivingResource).length;
     return next;
   }, [inArea]);
   const results = useMemo(() => (searching ? searchResources(query, inArea) : []), [query, searching, inArea]);
@@ -167,6 +169,9 @@ export function HomeScreen({
     }
     if (openCat === 'childcare') {
       return sortChildcareResources(inArea.filter(isChildcareResource));
+    }
+    if (openCat === 'driving') {
+      return inArea.filter(isDrivingResource);
     }
     return inArea.filter((r) => r.category === openCat);
   }, [openCat, inArea, pregnancyFilter, votingFilter, languageFilter, marriageFilter, divorceFilter, religionFilter]);

@@ -52,7 +52,7 @@ jobs:
       - run: node scripts/install-allowed.mjs
       - run: node scripts/export-web.mjs
       - name: Build Windows installer
-        run: npx electron-builder --win nsis --config electron-builder.yml
+        run: npx electron-builder --win nsis --publish never --config electron-builder.yml
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -76,7 +76,7 @@ jobs:
       - run: node scripts/install-allowed.mjs
       - run: node scripts/export-web.mjs
       - name: Build Mac DMG
-        run: npx electron-builder --mac dmg --config electron-builder.yml
+        run: npx electron-builder --mac dmg --publish never --config electron-builder.yml
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

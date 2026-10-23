@@ -8037,6 +8037,277 @@
         "mutual aid",
         "outreach"
       ]
+    },
+    {
+      "id": "larimer-vehicle-licensing-fort-collins",
+      "name": "Larimer County Vehicle Licensing - Fort Collins",
+      "category": "driving",
+      "description": "County office for vehicle registration, titles, plates and renewals; in-person visits are by appointment. Standard state fees.",
+      "phone": "970-498-7878",
+      "url": "https://www.larimer.gov/clerk/vehiclelicensing/in-person",
+      "address": "200 W Oak St, First Floor, Fort Collins, CO 80521",
+      "hours": "Mon-Fri 8am-5pm (appointment only; book at larimer.org/bookatime)",
+      "area": "Fort Collins",
+      "tags": [
+        "registration",
+        "title",
+        "plates",
+        "appointment"
+      ]
+    },
+    {
+      "id": "larimer-vehicle-licensing-loveland",
+      "name": "Larimer County Vehicle Licensing - Loveland",
+      "category": "driving",
+      "description": "County office for vehicle registration, titles and plates; in-person visits are by appointment. Standard state fees.",
+      "phone": "970-498-7878",
+      "url": "https://www.larimer.gov/clerk/vehiclelicensing/in-person",
+      "address": "200 Peridot Ave, Loveland, CO 80537",
+      "hours": "Mon-Fri 8am-5pm (appointment only)",
+      "area": "Loveland",
+      "tags": [
+        "registration",
+        "title",
+        "plates",
+        "appointment"
+      ]
+    },
+    {
+      "id": "larimer-vehicle-licensing-estes-park",
+      "name": "Larimer County Vehicle Licensing - Estes Park",
+      "category": "driving",
+      "description": "County office for vehicle registration, titles and plates in Estes Park. Standard state fees.",
+      "phone": "970-498-7878",
+      "url": "https://www.larimer.gov/clerk/vehiclelicensing/in-person",
+      "address": "1601 Brodie Ave, Estes Park, CO 80517",
+      "hours": "Mon-Fri 8am-4:30pm (appointment only)",
+      "area": "Estes Park",
+      "tags": [
+        "registration",
+        "title",
+        "plates"
+      ]
+    },
+    {
+      "id": "mydmv-colorado-online",
+      "name": "myDMV Colorado (online services)",
+      "category": "driving",
+      "description": "Renew registration or license, check reinstatement requirements, pay fees and apply for emissions waivers online. Free to use; normal state fees still apply.",
+      "phone": "303-205-5613",
+      "url": "https://mydmv.colorado.gov/",
+      "address": null,
+      "hours": "Online 24/7",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "online",
+        "renewal",
+        "registration",
+        "reinstatement"
+      ]
+    },
+    {
+      "id": "colorado-dmv-reinstatement-center",
+      "name": "Colorado DMV Driver License Reinstatement Center",
+      "category": "driving",
+      "description": "Step-by-step help getting a suspended or revoked license back (points, unpaid tickets, child support, DUI). The reinstatement fee is $95, plus $25 for a DUI.",
+      "phone": "303-205-5613",
+      "url": "https://dmv.colorado.gov/reinstatements",
+      "address": null,
+      "hours": null,
+      "area": "Colorado (statewide)",
+      "tags": [
+        "suspended license",
+        "reinstatement",
+        "SR-22",
+        "DUI",
+        "tickets"
+      ]
+    },
+    {
+      "id": "larimer-court-resource-center",
+      "name": "Larimer Court Resource Center (self-help)",
+      "category": "driving",
+      "description": "Free help with court forms, case status and procedures for people without a lawyer, including traffic cases and unpaid fines (no legal advice).",
+      "phone": "970-494-3581",
+      "url": "https://www.coloradojudicial.gov/courts/trial-courts/larimer-county",
+      "address": "201 LaPorte Ave, First Floor, Fort Collins, CO 80521",
+      "hours": "Mon, Wed, Fri 8am-4pm; Tue, Thu 8am-2pm",
+      "area": "Fort Collins",
+      "tags": [
+        "court",
+        "tickets",
+        "fines",
+        "self-help",
+        "free"
+      ]
+    },
+    {
+      "id": "larimer-court-collections",
+      "name": "Larimer Courts Collections (fines and payment plans)",
+      "category": "driving",
+      "description": "Court office to pay or set up a payment plan on traffic fines and court costs so you can get a court clearance for the DMV.",
+      "phone": "970-494-3530",
+      "url": "https://www.coloradojudicial.gov/courts/trial-courts/larimer-county",
+      "address": "201 LaPorte Ave, Suite 100, Fort Collins, CO 80521",
+      "hours": "Mon-Fri 7:30am-4:30pm",
+      "area": "Fort Collins",
+      "tags": [
+        "fines",
+        "tickets",
+        "payment plan",
+        "court clearance"
+      ]
+    },
+    {
+      "id": "colorado-driver-handbook-practice",
+      "name": "Colorado Driver Handbook and free practice quiz",
+      "category": "driving",
+      "description": "Official free driver handbook and practice quiz to study for the permit (written) test.",
+      "phone": "303-205-5600",
+      "url": "https://dmv.colorado.gov/drivereducation",
+      "address": null,
+      "hours": "Online 24/7",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "permit test",
+        "driver's ed",
+        "study",
+        "free"
+      ]
+    },
+    {
+      "id": "colorado-home-knowledge-test",
+      "name": "Colorado @Home Driving Knowledge Test",
+      "category": "driving",
+      "description": "Take the official permit written test online at home with a webcam. The fee is $6.50 plus an $11.50 state fee.",
+      "phone": "303-205-5600",
+      "url": "https://dmv.colorado.gov/home-driving-knowledge-tests",
+      "address": null,
+      "hours": "Online",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "permit test",
+        "written test",
+        "online"
+      ]
+    },
+    {
+      "id": "colorado-adult-permit",
+      "name": "Colorado adult instruction permit (18+)",
+      "category": "driving",
+      "description": "How adults get a learner permit and then a license, including what to bring. Standard state fees.",
+      "phone": "303-205-5600",
+      "url": "https://dmv.colorado.gov/adult-permit",
+      "address": null,
+      "hours": null,
+      "area": "Colorado (statewide)",
+      "tags": [
+        "permit",
+        "adult",
+        "first license"
+      ]
+    },
+    {
+      "id": "aircare-fort-collins",
+      "name": "Air Care Colorado emissions test - Fort Collins",
+      "category": "driving",
+      "description": "Emissions testing station for vehicles that need a test before registration (I-25 and Hwy 14). A test fee applies.",
+      "phone": "970-247-8378",
+      "url": "https://www.aircarecolorado.com/",
+      "address": "835 SE Frontage Rd, Fort Collins, CO 80524",
+      "hours": "Mon-Fri 8am-5:30pm; Sat 8am-1pm",
+      "area": "Fort Collins",
+      "tags": [
+        "emissions",
+        "smog test",
+        "registration"
+      ]
+    },
+    {
+      "id": "aircare-loveland",
+      "name": "Air Care Colorado emissions test - Loveland",
+      "category": "driving",
+      "description": "Emissions testing station near Hwy 287 and 71st St. A test fee applies.",
+      "phone": "970-247-8378",
+      "url": "https://www.aircarecolorado.com/",
+      "address": "7001 N Franklin Ave, Loveland, CO 80538",
+      "hours": "Mon-Fri 8am-5:30pm; Sat 8am-1pm",
+      "area": "Loveland",
+      "tags": [
+        "emissions",
+        "smog test"
+      ]
+    },
+    {
+      "id": "cdphe-emissions-tech-center-fort-collins",
+      "name": "CDPHE Emissions Technical Center - Fort Collins",
+      "category": "driving",
+      "description": "State experts diagnose why a car keeps failing emissions (they don't repair); by appointment. The diagnosis is free.",
+      "phone": "970-221-2105",
+      "url": "https://cdphe.colorado.gov/emissions-technical-centers",
+      "address": "835 SE Frontage Rd, Fort Collins, CO 80524",
+      "hours": "By appointment",
+      "area": "Fort Collins",
+      "tags": [
+        "emissions",
+        "failed test",
+        "diagnosis",
+        "free"
+      ]
+    },
+    {
+      "id": "colorado-emissions-hardship-waiver",
+      "name": "Colorado emissions economic hardship waiver",
+      "category": "driving",
+      "description": "If you get public assistance (like SNAP or Medicaid) and your car failed emissions, you may get a free one-time waiver to register while you save for repairs.",
+      "phone": "303-205-5603",
+      "url": "https://dmv.colorado.gov/emissions-waivers",
+      "address": null,
+      "hours": null,
+      "area": "Colorado (statewide)",
+      "tags": [
+        "emissions",
+        "waiver",
+        "low income",
+        "SNAP",
+        "Medicaid",
+        "free"
+      ]
+    },
+    {
+      "id": "larimer-workforce-transport-help",
+      "name": "Larimer Workforce Center - transportation and car repair help",
+      "category": "driving",
+      "description": "Enrolled job seekers may get gas cards, bus passes or car repairs (up to about $400/year) to get or keep a job. Help is free if you qualify.",
+      "phone": "970-498-6600",
+      "url": "https://www.larimer.gov/ewd/programs/career-transition-and-training-services/eligibility",
+      "address": null,
+      "hours": null,
+      "area": "Larimer County",
+      "tags": [
+        "gas cards",
+        "car repair",
+        "bus pass",
+        "jobs",
+        "free"
+      ]
+    },
+    {
+      "id": "colorado-division-of-insurance-auto",
+      "name": "Colorado Division of Insurance - auto insurance help",
+      "category": "driving",
+      "description": "Free state help line for car insurance questions, shopping tips, rate comparisons and complaints (choose option 3).",
+      "phone": "1-800-930-3745",
+      "url": "https://doi.colorado.gov/types-of-insurance/auto-insurance",
+      "address": "1560 Broadway, Suite 1300, Denver, CO 80202",
+      "hours": "Mon-Fri 8am-5pm",
+      "area": "Colorado (statewide)",
+      "tags": [
+        "car insurance",
+        "SR-22",
+        "complaint",
+        "free"
+      ]
     }
   ]
 }
